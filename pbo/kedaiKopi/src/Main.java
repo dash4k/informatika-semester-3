@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    // Scanner for user input
     private static final Scanner scanner = new Scanner(System.in);
     
     public static void main(String[] args) {
@@ -13,7 +14,9 @@ public class Main {
         IntWrapper choice1 = new IntWrapper(0), choice2 = new IntWrapper(0), choice4 = new IntWrapper(0), cash = new IntWrapper(0);
         CharWrapper choice3 = new CharWrapper(null);
         
+        // Menu Loop
         while (flag1) {
+            // Main Mennu
             clear();
             System.out.println("Main Menu\n");
             System.out.println("1. Order");
@@ -22,6 +25,7 @@ public class Main {
             System.out.print("\nChoice: ");
             if (ask_int(choice1)) {
                 switch (choice1.value) {
+                    // Order from menu
                     case 1:
                         clear();
                         System.out.format("%-5s %-10s %-5s%n%n", "ID", "Name", "Price");
@@ -32,14 +36,21 @@ public class Main {
                         System.out.format("%-5d %-10s %10d%n", 5, "Macchiato", 22500);
                         System.out.print("\nChoice: ");
                         if (ask_int(choice2)) {
+                            // If order is correct
                             if (order_list.add(choice2.value)) {
                                 System.out.println("Success");
+                                System.out.print("Press Enter to go back..... ");
+                                scanner.nextLine();
                             }
+                            // If order is incorrect
                             else {
                                 System.err.println("Failed");
+                                System.out.print("Press Enter to go back..... ");
+                                scanner.nextLine();
                             }
                         }
                         break;
+                    // Edit current order
                     case 2:
                         flag2 = true;
                         while (flag2) {
@@ -49,36 +60,64 @@ public class Main {
                                 System.out.print("Choice: ");
                                 if (ask_char(choice3)) {
                                     switch (choice3.value.toLowerCase()) {
+                                        // Add to the current order
                                         case "a":
                                             clear();
                                             if (order_list.printTable()) {
                                                 System.out.print("Choice: ");
                                                 if (ask_int(choice4)) {
                                                     if (order_list.search(choice4.value)) {
-                                                        order_list.add(choice4.value);   
+                                                        order_list.add(choice4.value);
+                                                        System.out.println("Success");
+                                                        System.out.print("Press Enter to go back..... ");
+                                                        scanner.nextLine();   
+                                                    }
+                                                    else {
+                                                        System.err.println("Failed");
+                                                        System.out.print("Press Enter to go back..... ");
+                                                        scanner.nextLine();
                                                     }
                                                 }
                                             }
                                             break;
+                                        // Subtract from the current order
                                         case "b":
                                             clear();
                                             if (order_list.printTable()) {
                                                 System.out.print("Choice: ");
                                                 if (ask_int(choice4)) {
                                                     if (order_list.search(choice4.value)) {
-                                                        order_list.delete(choice4.value);   
+                                                        order_list.delete(choice4.value);
+                                                        System.out.println("Success");
+                                                        System.out.print("Press Enter to go back..... ");
+                                                        scanner.nextLine();   
+                                                    }
+                                                    else{
+                                                        System.err.println("Failed");
+                                                        System.out.print("Press Enter to go back..... ");
+                                                        scanner.nextLine();
                                                     }
                                                 }
                                             }
                                             break;
+                                        // Checkout the order (reset the order)
                                         case "c":
                                             System.out.print("Cash: ");
                                             if (ask_int(cash)) {
                                                 if (cash.value > order_list.total) {
                                                     order_list = new Kopi();
+                                                    System.out.println("Success");
+                                                    System.out.print("Press Enter to go back..... ");
+                                                    scanner.nextLine();
+                                                }
+                                                else {
+                                                    System.err.println("Failed");
+                                                    System.out.print("Press Enter to go back..... ");
+                                                    scanner.nextLine();
                                                 }
                                             }
                                             break;
+                                        // Back to the Main Menu
                                         case "d":
                                             flag2 = false;
                                             break;
@@ -87,11 +126,13 @@ public class Main {
                                     }
                                 }
                             }
+                            // Back to the Main Menu
                             else {
                                 flag2 = false;
                             }   
                         }
                         break;
+                    // Exit the program
                     case 3:
                         flag1 = false;
                         break;
@@ -100,6 +141,7 @@ public class Main {
                 }
             }
         }
+        // close the scanner
         scanner.close();
     }
 
