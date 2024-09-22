@@ -1,18 +1,57 @@
-## Getting Started
+<a name="readme-top"></a>
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+<div align="center">
 
-## Folder Structure
+## Java Coffee Shop 
 
-The workspace contains two folders by default, where:
+</div>
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+<!-- PROJECT LOGO -->
+</br>
+<div align="center">
+  <a href="https://www.unud.ac.id/">
+    <img src="https://github.com/dash4k/tugas-akhir-alpro-1/assets/133938416/ff71757a-1b51-44b7-b14e-b53b061d9815" alt="Logo" width="230" height="259">
+  </a>
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+<h3 align="center">Tugas 1 Pemrograman Berbasis Objek</h3>
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+  <p align="center">
+    Coffee shop management app built in Java with command-line interface (CLI)
+    </br>
+  </p>
+</div>
+</br>
 
-## Dependency Management
+## Build from source
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+1. Clone the repo
+   ```sh
+   https://github.com/dash4k/informatika-semester-3.git
+   ```
+2. Go to the build directory
+   ```sh
+   cd /pbo/kedaiKopi
+   ```
+3. Make the binary
+   ```sh
+   javac -d bin src/Kopi.java src/Main.java
+   ```
+4. Run the binary
+   ```sh
+   java -cp bin Main
+   ```
+</br>
+
+
+
+<!-- CONTACT -->
+## Authors
+
+Danishwara Pracheta (2308561050): [@dash4k](https://www.github.com/dash4k)
+</br></br>
+Maliqy Tritata (2308561068): [@Maliqytritata](https://github.com/Maliqytritata)
+</br></br>
+Putu Krisna (2308561122): [@krisna554](https://github.com/krisna554)
+</br></br>
+Dewa Mahattama (2308561137): [@DewaMahattama](https://github.com/DewaMahattama)
+</br>
