@@ -122,6 +122,21 @@ public class Kopi {
         return true;
     }
 
+    // Method for searching the order
+    public boolean search(int id) {
+        if (head == null) {
+            return false;
+        }
+        Node curr = head;
+        while (curr != null) {
+            if (curr.id == id) {
+                return true;
+            }
+            curr = curr.next;
+        }
+        return false;
+    }
+
     // Method for deleting or decreasing an order from a list 
     public boolean delete(int id) {
         if (head == null) {

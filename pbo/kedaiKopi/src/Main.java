@@ -66,7 +66,8 @@ public class Main {
                                             if (order_list.printTable()) {
                                                 System.out.print("Choice: ");
                                                 if (ask_int(choice4)) {
-                                                    if (order_list.add(choice4.value)) {
+                                                    if (order_list.search(choice4.value)) {
+                                                        order_list.add(choice4.value);
                                                         System.out.println("Success");
                                                         System.out.print("Press Enter to go back..... ");
                                                         scanner.nextLine();   
