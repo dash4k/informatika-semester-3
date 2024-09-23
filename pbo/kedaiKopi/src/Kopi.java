@@ -67,6 +67,7 @@ public class Kopi {
             while (curr != null) {
                 if (curr.id == id) {
                     curr.qty++;
+                    curr.price = new_node.price * curr.qty;
                     return true;
                 }
                 curr = curr.next;
@@ -144,21 +145,6 @@ public class Kopi {
         }
     }
 
-    // Method for searching the order
-    public boolean search(int id) {
-        if (head == null) {
-            return false;
-        }
-        Node curr = head;
-        while (curr != null) {
-            if (curr.id == id) {
-                return true;
-            }
-            curr = curr.next;
-        }
-        return false;
-    }
-
     // Method for printing the order
     public boolean printTable() {
         total = 0;
@@ -172,7 +158,7 @@ public class Kopi {
         Node curr = head;
         while (curr != null) {
             System.out.format("%-5d %-10s %-5d %-10d%n", curr.id, curr.name, curr.qty, curr.price);
-            total += curr.qty * curr.price;
+            total += curr.price;
             curr = curr.next;
         }
 
