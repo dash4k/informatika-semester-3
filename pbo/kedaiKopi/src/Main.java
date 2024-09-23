@@ -16,7 +16,7 @@ public class Main {
         
         // Menu Loop
         while (flag1) {
-            // Main Mennu
+            // Main Menu
             clear();
             System.out.println("Main Menu\n");
             System.out.println("1. Order");
