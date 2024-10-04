@@ -5,7 +5,7 @@ import curses
 def main(stdscr):
     menu = [
         "L1 (Starts with '10' & ends with '01')", 
-        "L2 (Contains '000' & ends with '01')", 
+        "L2 (Contains '000' & ends with '1')", 
         "L3 (Starts & ends with different symbol)", 
         "L4 (Starts & ends with identical symbol & contains '101')", 
         "Exit"

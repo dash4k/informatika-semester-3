@@ -21,8 +21,6 @@ def l2_delta(state, x) -> str:
         return 'D' if x == '0' else 'A'
     elif state == 'D':
         return 'E' if x == '1' else state
-    elif state == 'E':
-        return 'K' if x == '1' else 'D'
     else:
         return 'D' if x == '0' else state
 
