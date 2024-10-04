@@ -56,15 +56,18 @@ def print_menu(stdscr, selected: int, menu: list):
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
     stdscr.clear()
     h, w = stdscr.getmaxyx()
+    stdscr.addstr(h//2 - len(menu)//2 - 3, w//2 - len("DETERMINISTIC FINITE AUTOMATA")//2, "DETERMINISTIC FINITE AUTOMATA", curses.A_BOLD)
     for i, title in enumerate(menu):
         x = w//2 - len(title)//2
         y = h//2 - len(menu)//2 + i
         if i == selected:
             stdscr.attron(curses.color_pair(1))
-            stdscr.addstr(y, x, title)
+            stdscr.addstr(y, x - 4, "--> " + title)
             stdscr.attroff(curses.color_pair(1))
         else:
             stdscr.addstr(y, x, title)
+    stdscr.addstr(y + 3, w//2 - len("USE ARROW KEYS TO NAVIGATE THE MENU")//2, "USE ARROW KEYS TO NAVIGATE THE MENU", curses.A_UNDERLINE)
+    stdscr.addstr(h - 1, w - 8, "@dash4k")
 
 def l1_iterative(stdscr):
     h, w = stdscr.getmaxyx()
@@ -74,7 +77,7 @@ def l1_iterative(stdscr):
     flag2 = True
     buffer = ""
     state = " A"
-    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'ESC' to go back, press 'Enter' to reset")
+    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'Backspace' to erase, press 'Enter' to reset, press 'ESC' to go back.")
     stdscr.refresh()
     while flag2:
         x = stdscr.getch()
@@ -106,7 +109,7 @@ def l1_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not starts with '10' & ends with '01'")
         if len(state) > w-6:
-            pad.addnstr(3, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_REVERSE)
+            pad.addnstr(3, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
 
 def l2_iterative(stdscr):
@@ -117,7 +120,7 @@ def l2_iterative(stdscr):
     flag2 = True
     buffer = ""
     state = " A"
-    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'ESC' to go back, press 'Enter' to reset")
+    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'Backspace' to erase, press 'Enter' to reset, press 'ESC' to go back.")
     stdscr.refresh()
     while flag2:
         x = stdscr.getch()
@@ -149,7 +152,7 @@ def l2_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not contains '000' & ends with '01'")
         if len(state) > w-6:
-            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_REVERSE)
+            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
 
 def l3_iterative(stdscr):
@@ -160,7 +163,7 @@ def l3_iterative(stdscr):
     flag2 = True
     buffer = ""
     state = " A"
-    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'ESC' to go back, press 'Enter' to reset")
+    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'Backspace' to erase, press 'Enter' to reset, press 'ESC' to go back.")
     stdscr.refresh()
     while flag2:
         x = stdscr.getch()
@@ -192,7 +195,7 @@ def l3_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not starts & ends with different symbol")
         if len(state) > w-6:
-            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_REVERSE)
+            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
 
 def l4_iterative(stdscr):
@@ -203,7 +206,7 @@ def l4_iterative(stdscr):
     flag2 = True
     buffer = ""
     state = " A"
-    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'ESC' to go back, press 'Enter' to reset")
+    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'Backspace' to erase, press 'Enter' to reset, press 'ESC' to go back.")
     stdscr.refresh()
     while flag2:
         x = stdscr.getch()
@@ -235,5 +238,5 @@ def l4_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not starts & ends with identical symbol & contains '101'")
         if len(state) > w-6:
-            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_REVERSE)
+            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
