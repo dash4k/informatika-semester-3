@@ -67,6 +67,8 @@ def print_menu(stdscr, selected: int, menu: list):
         else:
             stdscr.addstr(y, x, title)
     stdscr.addstr(y + 3, w//2 - len("USE ARROW KEYS TO NAVIGATE THE MENU")//2, "USE ARROW KEYS TO NAVIGATE THE MENU", curses.A_UNDERLINE)
+    stdscr.addstr(y + 5, w//2 - len("Alert: For the most comfortable experience,")//2, "Alert: For the most comfortable experience,", curses.A_PROTECT)
+    stdscr.addstr(y + 6, w//2 - len("Please avoid resizing your terminal window.")//2, "Please avoid resizing your terminal window.", curses.A_PROTECT)
     stdscr.addstr(h - 1, w - 8, "@dash4k")
 
 def l1_iterative(stdscr):
@@ -109,7 +111,7 @@ def l1_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not starts with '10' & ends with '01'")
         if len(state) > w-6:
-            pad.addnstr(3, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
+            pad.addnstr(3, 0, "Slow down there buckaroo, too many of the states have already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
 
 def l2_iterative(stdscr):
@@ -152,7 +154,7 @@ def l2_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not contains '000' & ends with '01'")
         if len(state) > w-6:
-            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
+            pad.addnstr(3, 0, "Slow down there buckaroo, too many of the states have already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
 
 def l3_iterative(stdscr):
@@ -195,7 +197,7 @@ def l3_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not starts & ends with different symbol")
         if len(state) > w-6:
-            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
+            pad.addnstr(3, 0, "Slow down there buckaroo, too many of the states have already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
 
 def l4_iterative(stdscr):
@@ -238,5 +240,5 @@ def l4_iterative(stdscr):
         else:
             pad.addstr(4, 0, "The current input does not starts & ends with identical symbol & contains '101'")
         if len(state) > w-6:
-            pad.addnstr(5, 0, "Slow down there buckaroo, too many of states already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
+            pad.addnstr(3, 0, "Slow down there buckaroo, too many of the states have already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
