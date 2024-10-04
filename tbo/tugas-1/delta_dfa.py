@@ -22,7 +22,7 @@ def l2_delta(state, x) -> str:
     elif state == 'D':
         return 'E' if x == '1' else state
     else:
-        return 'D' if x == '0' else state
+        return 'D'
 
 def l3_delta(state, x) -> str:
     if state == 'A':
