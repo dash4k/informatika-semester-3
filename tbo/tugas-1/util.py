@@ -56,10 +56,10 @@ def print_menu(stdscr, selected: int, menu: list):
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
     stdscr.clear()
     h, w = stdscr.getmaxyx()
-    stdscr.addstr(h//2 - len(menu)//2 - 3, w//2 - len("DETERMINISTIC FINITE AUTOMATA")//2, "DETERMINISTIC FINITE AUTOMATA", curses.A_BOLD)
+    stdscr.addstr(h//2 - len(menu)//2 - 5, w//2 - len("DETERMINISTIC FINITE AUTOMATA")//2, "DETERMINISTIC FINITE AUTOMATA", curses.A_BOLD)
     for i, title in enumerate(menu):
         x = w//2 - len(title)//2
-        y = h//2 - len(menu)//2 + i
+        y = h//2 - len(menu)//2 - 2 + i
         if i == selected:
             stdscr.attron(curses.color_pair(1))
             stdscr.addstr(y, x - 4, "--> " + title)
