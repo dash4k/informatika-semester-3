@@ -40,7 +40,7 @@ def menu(l: int):
                 input("\nPress enter to continue...............")
                 continue
             elif l == 2:
-                print("\nThe current input contains '000' & ends with '01'") if l2(x) else print("\nThe current input does not contains '000' & ends with '1'")
+                print("\nThe current input contains '000' & ends with '1'") if l2(x) else print("\nThe current input does not contains '000' & ends with '1'")
                 input("\nPress enter to continue...............")
                 continue
             elif l == 3:
