@@ -107,9 +107,9 @@ def l1_iterative(stdscr):
         pad.attroff(curses.color_pair(1))
         pad.addstr(1, 0, state)
         if state[-1] == 'F':
-            pad.addstr(4, 0, "The current input starts with '10' & ends with '1'")
+            pad.addstr(4, 0, "The current input starts with '10' & ends with '01'")
         else:
-            pad.addstr(4, 0, "The current input does not starts with '10' & ends with '1'")
+            pad.addstr(4, 0, "The current input does not starts with '10' & ends with '01'")
         if len(state) > w-6:
             pad.addnstr(3, 0, "Slow down there buckaroo, too many of the states have already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
@@ -150,9 +150,9 @@ def l2_iterative(stdscr):
         pad.attroff(curses.color_pair(1))
         pad.addstr(1, 0, state)
         if state[-1] == 'E':
-            pad.addstr(4, 0, "The current input contains '000' & ends with '01'")
+            pad.addstr(4, 0, "The current input contains '000' & ends with '1'")
         else:
-            pad.addstr(4, 0, "The current input does not contains '000' & ends with '01'")
+            pad.addstr(4, 0, "The current input does not contains '000' & ends with '1'")
         if len(state) > w-6:
             pad.addnstr(3, 0, "Slow down there buckaroo, too many of the states have already been processed!", w, curses.A_UNDERLINE | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 11, w)
