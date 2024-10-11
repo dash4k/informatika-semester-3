@@ -7,6 +7,7 @@ public class Main {
         boolean flag1 = true;
         int amount = 0;
 
+        clear();
         System.out.print("CPU: ");
         String cpu = scanner.nextLine();
         System.out.print("GPU: ");
@@ -16,7 +17,8 @@ public class Main {
 
         Laptop laptop = new Laptop(cpu, gpu, mem);
 
-        while (flag1) { 
+        while (flag1) {
+            clear(); 
             System.out.println("1. Check Laptop's Health");    
             System.out.println("2. Fix Laptop's Health");    
             System.out.println("3. Payment");    
@@ -25,24 +27,29 @@ public class Main {
 
             switch (choice) {
                 case 1:
+                    clear();
                     laptop.checkHealth();
                     System.out.print("CPU Health: ");
-                    System.out.println(laptop.cpu_health);
+                    System.out.println(String.format("%.2f%%", laptop.cpu_health));
                     System.out.print("GPU Health: ");
-                    System.out.println(laptop.gpu_health);
+                    System.out.println(String.format("%.2f%%", laptop.gpu_health));
                     System.out.print("MEMORY Health: ");
-                    System.out.println(laptop.mem_health);
+                    System.out.println(String.format("%.2f%%", laptop.mem_health));
                     scanner.nextLine(); 
                     System.out.print("Press Enter to go back..... ");
                     scanner.nextLine();
                     break;
                 
                 case 2:
+                    clear();
                     if (laptop.cpu_health < 50) {
                         if (laptop.fixBrokenCPU()) {
                             amount++;
                             System.out.println("CPU Successfully Recovered!");
                         }
+                    }
+                    else {
+                        System.out.println("CPU Not Successfully Recovered!");
                     }
                     
                     if (laptop.gpu_health < 50) {
@@ -51,6 +58,9 @@ public class Main {
                             System.out.println("GPU Successfully Recovered!");
                         }
                     }
+                    else {
+                        System.out.println("GPU Not Successfully Recovered!");
+                    }
                     
                     if (laptop.mem_health < 50) {
                         if (laptop.fixBrokenMEM()) {
@@ -58,16 +68,19 @@ public class Main {
                             System.out.println("Memory Successfully Recovered!");
                         }
                     }
+                    else {
+                        System.out.println("Memory Not Successfully Recovered!");
+                    }
                     scanner.nextLine(); 
                     System.out.print("Press Enter to go back..... ");
                     scanner.nextLine();
                     break;
                 
                 case 3:
+                    clear();
                     Shop new_bill = new Shop(amount);
-                    new_bill.addBill();
-
-                    System.out.println("Bill: "+new_bill.bill);
+                    int bill = new_bill.addBill();
+                    System.out.println("Bill: "+bill);
                     System.out.print("Payment: ");
                     int pay = scanner.nextInt();
                     
@@ -90,4 +103,20 @@ public class Main {
             }
         }
     }    
+
+    public static void clear() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                // Windows
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                //Linux or Mac
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        }
+        catch (Exception e) {
+            // Handle any exceptions (IOException, InterruptedException)
+            System.err.println("Error while clearing the console");
+        }
+    }
 }
