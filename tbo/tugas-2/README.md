@@ -15,13 +15,8 @@ This project includes DFA and NFA. For more details, please refer to the source 
    cd /tbo/tugas-2
    ```
 4. Execute with python
-   for the recursive version
    ```sh
    python main.py
-   ```
-   for the iterative version
-   ```sh
-   python main-iterative.py
    ```
 
 ## Author
