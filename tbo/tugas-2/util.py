@@ -37,6 +37,8 @@ def lang(stdscr, l):
         4: "The current input does not starts & ends with identical symbol & contains '101'"
     }
     h, w = stdscr.getmaxyx()
+    stat = 15
+    message = 17
     stdscr.clear()
     pad = curses.newpad(100, w)
     flag2 = True
@@ -91,8 +93,6 @@ def lang(stdscr, l):
             state_nfa = " {'A'}"
             pass
         pad.clear()
-        stat = 15
-        message = 17
         pad.addstr(0, 0, f"Input: ")
         pad.addstr(0, 7, buffer, curses.A_REVERSE)
         pad.addstr(2, 0, "DFA States:", curses.A_BOLD)
@@ -101,50 +101,56 @@ def lang(stdscr, l):
         pad.addstr(8, 0, state_nfa)
         pad.addstr(stat, 0, "DFA Status: ", curses.A_ITALIC)
         pad.addstr(stat, 25, "NFA Status: ", curses.A_ITALIC)
+        dfa_status = False
+        nfa_status = False
         if l == 1:
             if l1_dfa(buffer):
+                dfa_status = True
                 pad.addstr(stat, 12, " ACCEPTED ", curses.A_REVERSE)
             else:
                 pad.addstr(stat, 12, " REJECTED ", curses.A_REVERSE)
             if l1_nfa(buffer):
+                nfa_status = True
                 pad.addstr(stat, 37, " ACCEPTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, accept[l], curses.A_BOLD)
             else:
                 pad.addstr(stat, 37, " REJECTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, reject[l], curses.A_BOLD)
         elif l == 2:
             if l2_dfa(buffer):
+                dfa_status = True
                 pad.addstr(stat, 12, " ACCEPTED ", curses.A_REVERSE)
             else:
                 pad.addstr(stat, 12, " REJECTED ", curses.A_REVERSE)
             if l2_nfa(buffer):
+                nfa_status = True
                 pad.addstr(stat, 37, " ACCEPTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, accept[l], curses.A_BOLD)
             else:
                 pad.addstr(stat, 37, " REJECTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, reject[l], curses.A_BOLD)
         elif l == 3:
             if l3_dfa(buffer):
+                dfa_status = True
                 pad.addstr(stat, 12, " ACCEPTED ", curses.A_REVERSE)
             else:
                 pad.addstr(stat, 12, " REJECTED ", curses.A_REVERSE)
             if l3_nfa(buffer):
+                nfa_status = True
                 pad.addstr(stat, 37, " ACCEPTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, accept[l], curses.A_BOLD)
             else:
                 pad.addstr(stat, 37, " REJECTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, reject[l], curses.A_BOLD)
         elif l == 4:
             if l4_dfa(buffer):
+                dfa_status = True
                 pad.addstr(stat, 12, " ACCEPTED ", curses.A_REVERSE)
             else:
                 pad.addstr(stat, 12, " REJECTED ", curses.A_REVERSE)
             if l4_nfa(buffer):
+                nfa_status = True
                 pad.addstr(stat, 37, " ACCEPTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, accept[l], curses.A_BOLD)
             else:
                 pad.addstr(stat, 37, " REJECTED ", curses.A_REVERSE)
-                pad.addstr(message, 0, reject[l], curses.A_BOLD)
+        if dfa_status and nfa_status:
+            pad.addstr(message, 0, accept[l], curses.A_BOLD)
+        else:
+            pad.addstr(message, 0, reject[l], curses.A_BOLD)
         if len(state_dfa) > w+w:
             pad.addnstr(19, 0, "Slow down there buckaroo, too many of the states have already been processed!", w, curses.A_UNDERLINE | curses.A_ITALIC | curses.A_BOLD)
         pad.refresh(0, 0, 2, 0, 25, w)
