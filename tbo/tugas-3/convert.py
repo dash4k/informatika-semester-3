@@ -10,9 +10,9 @@ def finals(nfa_finals: set, dfa_states: set) -> set:
             dfa_finals.add(''.join(state))
     return dfa_finals
 
-def deltas(delta_nfa: dict, dfa_states: set, lang: set, q0: str) -> dict:
+def deltas(delta_nfa: dict, dfa_states: set, lang: set, q0: set) -> dict:
     result = {}
-    curr_states = {frozenset([q0])}
+    curr_states = {frozenset(q0)}
     visited = set(curr_states) 
     while curr_states:
         current = curr_states.pop() 

@@ -46,7 +46,7 @@
 # # print()
 # # print(result)
 
-from util import print_menu, Initialize_nfa
+from util import print_menu, initialize_nfa
 import curses
 
 def main(stdscr):
@@ -61,6 +61,11 @@ def main(stdscr):
     row = 0
     flag1 = True
     nfa_initialized = False
+    nfa_states = set()
+    nfa_language = set()
+    delta_nfa = {}
+    nfa_q0 = set()
+    nfa_finals = set()
     
     print_menu(stdscr, row, menu, nfa_initialized)
 
@@ -92,9 +97,9 @@ def main(stdscr):
                 flag1 = False
             else:
                 if row == 0:
-                    # lang(stdscr, 1)
-                    if Initialize_nfa(stdscr):
-                        nfa_initialized = True
+                    # states, set(language_buffer), delta_nfa, {'A'}, set(finals_buffer), True
+                    nfa_states, nfa_language, delta_nfa, nfa_q0, nfa_finals, nfa_initialized = initialize_nfa(stdscr)
+                    if nfa_initialized:
                         row = 1
                 elif row == 1:
                     # lang(stdscr, 2)
