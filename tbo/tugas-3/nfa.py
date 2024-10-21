@@ -8,5 +8,5 @@ def hat_delta_nfa(delta_nfa: dict, states: set, x: str) -> set:
         states = curr
     return states
 
-def nfa(finals: set, delta_nfa: dict, x: str, q0: set) -> bool:
+def l_nfa(finals: set, delta_nfa: dict, x: str, q0: set) -> bool:
     return True if finals.intersection(hat_delta_nfa(delta_nfa, q0, x)) != set() else False

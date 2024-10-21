@@ -1,116 +1,103 @@
-# from nfa import nfa
-# from dfa import dfa
-# from convert import states, finals, deltas, simplified
-
-# # nfa_finals = {
-# #     'E'
-# # }
-
-# # delta_nfa = {
-# #     ('A', '1'): {'B'},
-# #     ('B', '0'): {'C'},
-# #     ('C', '0'): {'C', 'D'},
-# #     ('C', '1'): {'C'},
-# #     ('D', '1'): {'E'}
-# # }
-
-# # # print("True") if nfa(nfa_finals, delta_nfa, "100100", {'A'}) else print("False")
-
-# # nfa_states = {chr(i) for i in range(65, 70)}
-
-# # # print(states(nfa_states))
-
-# # # print(finals(nfa_finals, states(nfa_states)))
-
-# # delta_dfa = deltas(delta_nfa, states(nfa_states), {'0', '1'}, 'A')
-
-
-# # # print(delta_dfa)
-
-# # # print("True") if dfa(finals(nfa_finals, states(nfa_states)), delta_dfa, "1001", frozenset({'A'})) else print("False")
-
-# # for key, value in delta_dfa.items():
-# #     print(f"{key}: {value}")
-
-# # print()
-
-# # print(finals(nfa_finals, states(nfa_states)))
-
-# # s_delta_dfa = simplified(delta_dfa) 
-
-# # print()
-
-# # print(s_delta_dfa)
-
-# # result = dfa(finals(nfa_finals, states(nfa_states)), s_delta_dfa, "10010001", 'A')
-# # print()
-# # print(result)
-
-from util import print_menu, initialize_nfa
+from util import print_menu, initialize_nfa, convert_menu, lang
 import curses
 
 def main(stdscr):
     menu = [
         "Initialize NFA", 
         "Convert NFA to DFA", 
-        "NFA", 
-        "DFA", 
+        "NFA & NFA", 
+        "RESET", 
         "EXIT PROGRAM"
         ]
     curses.curs_set(0) #cursor visibility
     row = 0
     flag1 = True
     nfa_initialized = False
+    dfa_initialized = False
     nfa_states = set()
+    dfa_states = set()
     nfa_language = set()
+    dfa_language = set()
     delta_nfa = {}
+    delta_dfa = {}
     nfa_q0 = set()
+    dfa_q0 = ""
     nfa_finals = set()
+    dfa_finals = set()
+    nfa_list = []
     
-    print_menu(stdscr, row, menu, nfa_initialized)
+    print_menu(stdscr, row, menu, nfa_initialized, dfa_initialized)
 
     while flag1:
         key = stdscr.getch()
         if key == curses.KEY_UP:
-            if row > 0:
-                if nfa_initialized and row == 1:
-                    row = 4
-                elif not nfa_initialized:
-                    row = 1
-                else:
-                    row -= 1
-            else:
-                row = 4
-        elif key == curses.KEY_DOWN:
-            if row < 4:
-                if nfa_initialized:
-                    row += 1
-                else:
-                    row = 4
-            else:
-                if not nfa_initialized:
+            if not nfa_initialized:
+                if row > 0:
                     row = 0
                 else:
+                    row = 4
+            elif not dfa_initialized:
+                if row > 1:
                     row = 1
+                else:
+                    row = 4
+            else:
+                if 2 < row <= 4:
+                    row -= 1
+                else:
+                    row = 4
+        elif key == curses.KEY_DOWN:
+            if not nfa_initialized:
+                if row > 0:
+                    row = 0
+                else:
+                    row = 4
+            elif not dfa_initialized:
+                if row > 1:
+                    row = 1
+                else:
+                    row = 4
+            else:
+                if 2 <= row < 4:
+                    row += 1
+                else:
+                    row = 2
         elif key == curses.KEY_ENTER or key in [10, 13]: # 10 == '\n', 13 == '\r'    
             if row == 4:
                 flag1 = False
             else:
                 if row == 0:
-                    # states, set(language_buffer), delta_nfa, {'A'}, set(finals_buffer), True
                     nfa_states, nfa_language, delta_nfa, nfa_q0, nfa_finals, nfa_initialized = initialize_nfa(stdscr)
+                    nfa_list.append(nfa_states)
+                    nfa_list.append(nfa_language)
+                    nfa_list.append(delta_nfa)
+                    nfa_list.append(nfa_q0)
+                    nfa_list.append(nfa_finals)
                     if nfa_initialized:
                         row = 1
                 elif row == 1:
-                    # lang(stdscr, 2)
-                    pass
+                    dfa_states, dfa_language, delta_dfa, dfa_q0, dfa_finals, dfa_initialized = convert_menu(stdscr, nfa_list)
+                    if dfa_initialized:
+                        row = 2
                 elif row == 2:
-                    # lang(stdscr, 3)
-                    pass
+                    lang(stdscr, delta_dfa, delta_nfa, nfa_finals, dfa_finals)
                 elif row == 3:
-                    # lang(stdscr, 4)
-                    pass
+                    row = 0
+                    flag1 = True
+                    nfa_initialized = False
+                    dfa_initialized = False
+                    nfa_states = set()
+                    dfa_states = set()
+                    nfa_language = set()
+                    dfa_language = set()
+                    delta_nfa = {}
+                    delta_dfa = {}
+                    nfa_q0 = set()
+                    dfa_q0 = ""
+                    nfa_finals = set()
+                    dfa_finals = set()
+                    nfa_list = []
             pass
-        print_menu(stdscr, row, menu, nfa_initialized)
+        print_menu(stdscr, row, menu, nfa_initialized, dfa_initialized)
 
 curses.wrapper(main)
