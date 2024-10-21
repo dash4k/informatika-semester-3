@@ -34,14 +34,8 @@ def initialize_nfa(stdscr):
     stdscr.clear()
     h, w = stdscr.getmaxyx()
     states_buffer = " "
-    state_buffer = " "
-    sigma_buffer = " "
-    transition_buffer = " "
-    transition_set = []
     language_buffer = []
     states = set()
-    finals_buffer = []
-    delta_nfa = {}
     row1 = 0
     stdscr.addstr(0, 0, "Initialize NFA", curses.A_BOLD)
     stdscr.addstr(4, 0, "Number of state(s)         :", curses.A_UNDERLINE)
@@ -74,10 +68,16 @@ def initialize_nfa(stdscr):
             if chr(x).isalnum() and x != curses.KEY_UP and x != curses.KEY_DOWN and x != 127 and x != curses.KEY_BACKSPACE and x not in [10, 13] and chr(x) not in language_buffer:
                 language_buffer.append(chr(x))
         if x == 27: # 27 = Esc
-            return False
+            return set(), set(), {}, set(), set(), False
         elif x == curses.KEY_ENTER or x in [10, 13]: # 10 == '\n', 13 == '\r'
             if row1 == 2:
                 if states_buffer != " " and language_buffer != []:
+                    state_buffer = " "
+                    sigma_buffer = " "
+                    transition_buffer = " "
+                    transition_set = []
+                    finals_buffer = []
+                    delta_nfa = {}
                     row2 = 0
                     for i in range(65, 65+int(states_buffer)):
                         states.update(chr(i))
@@ -314,7 +314,6 @@ def convert_menu(stdscr, nfa_list: list):
     dfa_list.append(dfa_q0)
     dfa_list.append(dfa_finals)
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
-    curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
     h, w = stdscr.getmaxyx()
     stdscr.clear()
     stdscr.addstr(0, 0, "Convert NFA to DFA", curses.A_BOLD)
@@ -327,19 +326,16 @@ def convert_menu(stdscr, nfa_list: list):
         stdscr.addstr(y + 3, 0, str(nfa_list[i]))
         i += 1
     stdscr.addstr(y+6, w-10, " NEXT ", curses.color_pair(1))
-    stdscr.addstr(y+6, w-20, " BACK ", curses.color_pair(2))
     h, w = stdscr.getmaxyx()
     while True:
         pad.clear()
         if row1 == 0:
             pad.addstr(0, w-10, " NEXT ", curses.color_pair(1) | curses.A_REVERSE)
-            pad.addstr(0, w-20, " BACK ", curses.color_pair(2))
         elif row1 == 1:
             pad.addstr(0, w-10, " NEXT ", curses.color_pair(1))
-            pad.addstr(0, w-20, " BACK ", curses.color_pair(2) | curses.A_REVERSE)
         x = stdscr.getch()
         if x == 27: # 27 = Esc
-            return
+            return set(), set(), {}, "", set(), False 
         elif x == curses.KEY_UP or x == curses.KEY_RIGHT:
             if row1 > 0:
                 row1 -= 1
@@ -351,9 +347,7 @@ def convert_menu(stdscr, nfa_list: list):
             else:
                 row1 = 0
         elif x == curses.KEY_ENTER or x in [10, 13]: # 10 == '\n', 13 == '\r'
-            if row1 == 0:
-                break
-            elif row1 == 1:
+            if row1 == 1:
                 stdscr.clear()
                 stdscr.addstr(0, 0, "Convert NFA to DFA", curses.A_BOLD)
                 stdscr.addstr(3, 0, "DFA", curses.A_REVERSE)
@@ -364,18 +358,15 @@ def convert_menu(stdscr, nfa_list: list):
                     stdscr.addstr(y + 3, 0, str(dfa_list[j]))
                     j += 1
                 stdscr.addstr(y+6, w-10, " NEXT ", curses.color_pair(1))
-                stdscr.addstr(y+6, w-20, " BACK ", curses.color_pair(2))
                 while True:
                     pad.clear()
                     if row2 == 0:
                         pad.addstr(0, w-10, " NEXT ", curses.color_pair(1) | curses.A_REVERSE)
-                        pad.addstr(0, w-20, " BACK ", curses.color_pair(2))
                     elif row2 == 1:
                         pad.addstr(0, w-10, " NEXT ", curses.color_pair(1))
-                        pad.addstr(0, w-20, " BACK ", curses.color_pair(2) | curses.A_REVERSE)
                     z = stdscr.getch()
                     if z == 27: # 27 = Esc
-                        return
+                        return set(), set(), {}, "", set(), False
                     elif z == curses.KEY_UP or z == curses.KEY_RIGHT:
                         if row2 > 0:
                             row2 -= 1
@@ -387,11 +378,13 @@ def convert_menu(stdscr, nfa_list: list):
                         else:
                             row2 = 0
                     elif z == curses.KEY_ENTER or z in [10, 13]: # 10 == '\n', 13 == '\r'
-                        if row2 == 0:
-                            return set(), set(), {}, "", set(), False 
-                        elif row2 == 1:
+                        if row2 == 1:
                             return dfa_states, dfa_language, s_delta_dfa, dfa_q0, dfa_finals, True
+                        else:
+                            pass
                     pad.refresh(0, 0, y+6, 0, 30, w)
+                else:
+                    pass
         pad.refresh(0, 0, y+6, 0, 30, w)
 
 def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: set):
