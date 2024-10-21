@@ -40,7 +40,7 @@ def initialize_nfa(stdscr):
     stdscr.addstr(0, 0, "Initialize NFA", curses.A_BOLD)
     stdscr.addstr(4, 0, "Number of state(s)         :", curses.A_UNDERLINE)
     stdscr.addstr(4, 29, states_buffer, curses.A_REVERSE)
-    stdscr.addstr(5, 0, "(Enter an integer 0 < x < 24)", curses.A_DIM)
+    stdscr.addstr(5, 0, "(Enter an integer 0 < x < 8)", curses.A_DIM)
     stdscr.addstr(8, 0, "Language                   :", curses.A_UNDERLINE)
     stdscr.addstr(8, 29, str(language_buffer))
     stdscr.addstr(9, 0, "(Enter language character(s))", curses.A_DIM)
@@ -58,12 +58,12 @@ def initialize_nfa(stdscr):
                     else:
                         states_buffer = ""
                         states_buffer += chr(x)
-                elif len(states_buffer) == 2:
-                    states_buffer = "24"
+                elif len(states_buffer) == 1:
+                    states_buffer = "7"
                 else:
                     states_buffer += chr(x)
-                    if int(states_buffer) > 24:
-                        states_buffer = "24"
+                    if int(states_buffer) > 7:
+                        states_buffer = "7"
         elif row1 == 1:
             if chr(x).isalnum() and x != curses.KEY_UP and x != curses.KEY_DOWN and x != 127 and x != curses.KEY_BACKSPACE and x not in [10, 13] and chr(x) not in language_buffer:
                 language_buffer.append(chr(x))
@@ -318,16 +318,15 @@ def convert_menu(stdscr, nfa_list: list):
     stdscr.clear()
     stdscr.addstr(0, 0, "Convert NFA to DFA", curses.A_BOLD)
     stdscr.addstr(3, 0, "NFA", curses.A_REVERSE)
-    stdscr.addstr(h - 1, w - 8, "@dash4k")
     pad = curses.newpad(100, w)
     i = row1 = 0
-    y = 4
     for title in nfa_titles:
+        y, x = stdscr.getyx()
         stdscr.addstr(y + 2, 0, title, curses.A_UNDERLINE)
         stdscr.addstr(y + 3, 0, str(nfa_list[i]))
         i += 1
-        y += 3
-    stdscr.addstr(y+6, w-10, " NEXT ", curses.color_pair(1))
+    stdscr.addstr(h-5, w-10, " NEXT ", curses.color_pair(1))
+    h, w = stdscr.getmaxyx()
     while True:
         pad.clear()
         if row1 == 0:
@@ -352,15 +351,13 @@ def convert_menu(stdscr, nfa_list: list):
                 stdscr.clear()
                 stdscr.addstr(0, 0, "Convert NFA to DFA", curses.A_BOLD)
                 stdscr.addstr(3, 0, "DFA", curses.A_REVERSE)
-                stdscr.addstr(h - 1, w - 8, "@dash4k")
                 j = row2 = 0
-                y = 4
-                for title in dfa_titles:
+                for title in dfa_titles[:-3]:
+                    y, x = stdscr.getyx()
                     stdscr.addstr(y + 2, 0, title, curses.A_UNDERLINE)
                     stdscr.addstr(y + 3, 0, str(dfa_list[j]))
                     j += 1
-                    y += 3
-                stdscr.addstr(y+6, w-10, " NEXT ", curses.color_pair(1))
+                stdscr.addstr(h-5, w-10, " NEXT ", curses.color_pair(1))
                 while True:
                     pad.clear()
                     if row2 == 0:
@@ -382,15 +379,50 @@ def convert_menu(stdscr, nfa_list: list):
                             row2 = 0
                     elif z == curses.KEY_ENTER or z in [10, 13]: # 10 == '\n', 13 == '\r'
                         if row2 == 1:
-                            return dfa_states, dfa_language, s_delta_dfa, dfa_q0, dfa_finals, True
+                            stdscr.clear()
+                            stdscr.addstr(0, 0, "Convert NFA to DFA", curses.A_BOLD)
+                            stdscr.addstr(3, 0, "DFA", curses.A_REVERSE)
+                            row3 = 0
+                            k = 3
+                            for title in dfa_titles[-3:]:
+                                y, x = stdscr.getyx()
+                                stdscr.addstr(y + 2, 0, title, curses.A_UNDERLINE)
+                                stdscr.addstr(y + 3, 0, str(dfa_list[k]))
+                                k += 1
+                            stdscr.addstr(h-5, w-10, " NEXT ", curses.color_pair(1))
+                            while True:
+                                pad.clear()
+                                if row3 == 0:
+                                    pad.addstr(0, w-10, " NEXT ", curses.color_pair(1) | curses.A_REVERSE)
+                                elif row3 == 1:
+                                    pad.addstr(0, w-10, " NEXT ", curses.color_pair(1))
+                                p = stdscr.getch()
+                                if p == 27: # 27 = Esc
+                                    return set(), set(), {}, "", set(), False
+                                elif p == curses.KEY_UP or p == curses.KEY_RIGHT:
+                                    if row3 > 0:
+                                        row3 -= 1
+                                    else:
+                                        row3 = 1
+                                elif p == curses.KEY_DOWN or p == curses.KEY_LEFT:
+                                    if row3 < 1:
+                                        row3 += 1
+                                    else:
+                                        row3 = 0
+                                elif p == curses.KEY_ENTER or p in [10, 13]: # 10 == '\n', 13 == '\r'
+                                    if row3 == 1:
+                                        return dfa_states, dfa_language, s_delta_dfa, dfa_q0, dfa_finals, True
+                                    else:
+                                        pass
+                                pad.refresh(0, 0, h-5, 0, h-5, w)
                         else:
                             pass
-                    pad.refresh(0, 0, y+6, 0, 30, w)
+                    pad.refresh(0, 0, h-5, 0, h-5, w)
                 else:
                     pass
-        pad.refresh(0, 0, y+6, 0, 30, w)
+        pad.refresh(0, 0, h-5, 0, h-5, w)
 
-def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: set):
+def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: set, language: set):
     h, w = stdscr.getmaxyx()
     stat = 13
     message = 15
@@ -399,23 +431,26 @@ def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: 
     flag2 = True
     buffer = ""
     state_dfa = " A"
+    l_dfa = ['A']
     nfa = [{'A'}]
     state_nfa = " {'A'}"
-    stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'Backspace' to erase, press 'Enter' to reset, press 'ESC' to go back.")
+    stdscr.addstr(0, 0, "Insert a language character to continue, press 'Backspace' to erase, press 'Enter' to reset, press 'ESC' to go back.")
     stdscr.addstr(h - 1, w - 8, "@dash4k")
     stdscr.refresh()
     while flag2:
         x = stdscr.getch()
-        if x in [48, 49]: # 48 == '0' and 49 == '1'
+        if chr(x) in language:
             if len(state_dfa) > w+w:
                 pass
             else:
                 buffer += chr(x)
                 # fix for 'Dead' state cause only 'd' is inputted
-                if state_dfa[-4:] == "Dead":
-                    state_dfa += f" --{chr(x)}-> " + delta_dfa[("Dead", buffer[-1])]
-                else:    
-                    state_dfa += f" --{chr(x)}-> " + delta_dfa[(state_dfa[-1], buffer[-1])]
+                l_dfa.append(delta_dfa[(l_dfa[-1], buffer[-1])])
+                # if l_dfa[-4:] == "Dead":
+                #     state_dfa += f" --{chr(x)}-> " + delta_dfa[("Dead", buffer[-1])]
+                # else:    
+                #     state_dfa += f" --{chr(x)}-> " + delta_dfa[(state_dfa[-1], buffer[-1])]
+                state_dfa += f" --{chr(x)}-> " + l_dfa[-1]
                 nfa.append(hat_delta_nfa(delta_nfa, nfa[-1], buffer[-1]))
                 if nfa[-1] == set():
                     state_nfa += f" --{chr(x)}-> " + str({})    
@@ -437,6 +472,7 @@ def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: 
             i -= 7
             state_nfa = state_nfa[:i]
             nfa = nfa[:-1]
+            l_dfa = l_dfa[:-1]
         elif x == 27: # 27 = Esc
             break
         elif x == curses.KEY_ENTER or x in [10, 13]: # 10 == '\n', 13 == '\r'
@@ -444,6 +480,7 @@ def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: 
             state_dfa = " A"
             nfa = [{'A'}]
             state_nfa = " {'A'}"
+            l_dfa = ['A']
             pass
         pad.clear()
         pad.addstr(0, 0, f"Input: ")

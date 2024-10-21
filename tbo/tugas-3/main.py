@@ -80,7 +80,7 @@ def main(stdscr):
                     if dfa_initialized:
                         row = 2
                 elif row == 2:
-                    lang(stdscr, delta_dfa, delta_nfa, nfa_finals, dfa_finals)
+                    lang(stdscr, delta_dfa, delta_nfa, nfa_finals, dfa_finals, nfa_language)
                 elif row == 3:
                     row = 0
                     flag1 = True
