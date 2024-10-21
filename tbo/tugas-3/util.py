@@ -318,15 +318,16 @@ def convert_menu(stdscr, nfa_list: list):
     stdscr.clear()
     stdscr.addstr(0, 0, "Convert NFA to DFA", curses.A_BOLD)
     stdscr.addstr(3, 0, "NFA", curses.A_REVERSE)
+    stdscr.addstr(h - 1, w - 8, "@dash4k")
     pad = curses.newpad(100, w)
     i = row1 = 0
+    y = 4
     for title in nfa_titles:
-        y, x = stdscr.getyx()
         stdscr.addstr(y + 2, 0, title, curses.A_UNDERLINE)
         stdscr.addstr(y + 3, 0, str(nfa_list[i]))
         i += 1
+        y += 3
     stdscr.addstr(y+6, w-10, " NEXT ", curses.color_pair(1))
-    h, w = stdscr.getmaxyx()
     while True:
         pad.clear()
         if row1 == 0:
@@ -351,12 +352,14 @@ def convert_menu(stdscr, nfa_list: list):
                 stdscr.clear()
                 stdscr.addstr(0, 0, "Convert NFA to DFA", curses.A_BOLD)
                 stdscr.addstr(3, 0, "DFA", curses.A_REVERSE)
+                stdscr.addstr(h - 1, w - 8, "@dash4k")
                 j = row2 = 0
+                y = 4
                 for title in dfa_titles:
-                    y, x = stdscr.getyx()
                     stdscr.addstr(y + 2, 0, title, curses.A_UNDERLINE)
                     stdscr.addstr(y + 3, 0, str(dfa_list[j]))
                     j += 1
+                    y += 3
                 stdscr.addstr(y+6, w-10, " NEXT ", curses.color_pair(1))
                 while True:
                     pad.clear()
@@ -399,6 +402,7 @@ def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: 
     nfa = [{'A'}]
     state_nfa = " {'A'}"
     stdscr.addstr(0, 0, "Insert a binary value (0, 1) to continue, press 'Backspace' to erase, press 'Enter' to reset, press 'ESC' to go back.")
+    stdscr.addstr(h - 1, w - 8, "@dash4k")
     stdscr.refresh()
     while flag2:
         x = stdscr.getch()
