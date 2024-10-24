@@ -463,7 +463,13 @@ def lang(stdscr, delta_dfa: dict, delta_nfa: dict, nfa_finals: set, dfa_finals: 
             if state_dfa[-4:] == "Dead":
                 state_dfa = state_dfa[:-11]
             else:
-                state_dfa = state_dfa[:-8]
+                i = -1
+                while True:
+                    if state_dfa[i] == '>':
+                        break
+                    i -= 1
+                i -= 5
+                state_dfa = state_dfa[:i]
             i = -1
             while True:
                 if state_nfa[i] == '{':

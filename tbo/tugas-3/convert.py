@@ -6,8 +6,8 @@ def states(nfa_states: set) -> set:
 def finals(nfa_finals: set, dfa_states: set) -> set:
     dfa_finals = set()
     for state in dfa_states:
-        if nfa_finals.intersection(state) != set():
-            dfa_finals.add(''.join(state))
+        if nfa_finals.intersection(set(state)) != set():
+            dfa_finals.add(''.join(sorted(state)))
     return dfa_finals
 
 def deltas(delta_nfa: dict, dfa_states: set, lang: set, q0: set) -> dict:
@@ -34,5 +34,5 @@ def deltas(delta_nfa: dict, dfa_states: set, lang: set, q0: set) -> dict:
 def simplified(delta_dfa: dict) -> dict:
     sda = {}
     for (state, sigma), value in delta_dfa.items():
-        sda[(''.join(state), sigma)] = ''.join(value)
+        sda[(''.join(sorted(state)), sigma)] = ''.join(sorted(value))
     return sda
