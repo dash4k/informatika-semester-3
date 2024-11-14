@@ -1,18 +1,52 @@
-## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+<a name="readme-top"></a>
 
-## Folder Structure
+<div align="center">
 
-The workspace contains two folders by default, where:
+## Quiz 1
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+</div>
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+<!-- PROJECT LOGO -->
+</br>
+<div align="center">
+  <a href="https://www.unud.ac.id/">
+    <img src="https://github.com/dash4k/tugas-akhir-alpro-1/assets/133938416/ff71757a-1b51-44b7-b14e-b53b061d9815" alt="Logo" width="230" height="259">
+  </a>
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+<h3 align="center">Kuis 1 Pemrograman Berbasis Objek</h3>
 
-## Dependency Management
+  <p align="center">
+    Abstract class, interface, and inheritance in Java
+    </br>
+  </p>
+</div>
+</br>
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Build from source
+
+1. Clone the repo
+   ```sh
+   https://github.com/dash4k/informatika-semester-3.git
+   ```
+2. Go to the build directory
+   ```sh
+   cd /pbo/quiz-1
+   ```
+3. Make the binary
+   ```sh
+   javac -d bin src/Chef.java src/Interface.java src/Worker.java src/Main.java
+   ```
+4. Run the binary
+   ```sh
+   java -cp bin Main
+   ```
+</br>
+
+
+
+<!-- CONTACT -->
+## Authors
+
+Danishwara Pracheta (2308561050): [@dash4k](https://www.github.com/dash4k)
+</br></br>
