@@ -26,7 +26,7 @@
 
 1. Clone the repo
    ```sh
-   https://github.com/dash4k/3-pbo-perpustakaan.git
+   https://github.com/dash4k/informatika-semester-3.git
    ```
 2. Go to the build directory
    ```sh
