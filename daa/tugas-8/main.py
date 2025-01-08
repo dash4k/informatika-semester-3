@@ -108,7 +108,7 @@ class Merge(tk.Frame):
     def perform_sort(self):
         user_input = self.entry_field.get()
         try:
-            array = list(map(float, user_input.split(',')))
+            array = list(map(int, user_input.split(',')))
             merge_sort(array)
             self.output.config(text=", ".join(map(str, array)))
         except ValueError:
