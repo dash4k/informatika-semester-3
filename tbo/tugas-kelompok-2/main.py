@@ -14,9 +14,9 @@ Anggota Kelompok:\n
 
 def display_results(text_accepted, text, data):
     if text_accepted:
-        messagebox.showinfo("Result", "Kalimat diterima: {}".format(" ".join(text)))
+        messagebox.showinfo("Hasil Validasi", "Kalimat diterima: {}".format(" ".join(text)))
     else:
-        messagebox.showerror("Result", "Kalimat tidak diterima.")
+        messagebox.showerror("Hasil Validasi", "Kalimat tidak diterima.")
 
     if data is not None:
         # Clear previous table
