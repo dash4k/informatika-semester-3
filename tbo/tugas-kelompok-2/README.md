@@ -32,7 +32,6 @@
    ```sh
    cd /informatika-semester-3/tbo/tugas-kelompok-2
    ```
-   ```
 3. Execute the main file
    ```sh
    python main.py
