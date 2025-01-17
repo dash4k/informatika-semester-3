@@ -89,4 +89,4 @@ frame_table.pack(pady=10)
 tree = ttk.Treeview(frame_table, show="headings")
 tree.pack(fill="both", expand=True)
 
-root.mainloop()
+root.mainloop() 
