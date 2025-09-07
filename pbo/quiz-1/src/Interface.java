@@ -1,3 +1,0 @@
-interface Cooks {
-    void cook();    
-}
